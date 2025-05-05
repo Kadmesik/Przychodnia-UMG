@@ -1,12 +1,126 @@
-﻿<UserControl x:Class="PolMedUMG.View.Visits"
+﻿<UserControl x:Class="PolMedUMG.View.Visits" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PolMedUMG.View"
              Height="Auto" Width="Auto">
 
-    <TextBlock Text="Hisotria wizyt"
-           FontSize="26"
-           FontWeight="Bold"
-           HorizontalAlignment="Center"
-           Margin="0,0,0,20"/>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <!-- Title -->
+        <TextBlock Text="Historia wizyt"
+                   FontSize="26"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+
+        
+        <StackPanel Grid.Row="1">
+            <!-- Headings -->
+            <StackPanel Orientation="Horizontal" Margin="10,0,0,5">
+                <TextBlock Text="Data" Width="120" FontWeight="Bold"/>
+                <TextBlock Text="Lekarz" Width="250" FontWeight="Bold"/>
+                <TextBlock Text="Opis" FontWeight="Bold"/>
+            </StackPanel>
+
+            <!-- Visits -->
+            <ListBox x:Name="VisitsListBox"
+                     Background="Transparent"
+                     BorderBrush="Transparent"
+                     BorderThickness="0"
+                     Padding="10"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     SelectionChanged="VisitsListBox_SelectionChanged">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0"
+                                Background="#8093FF" 
+                                CornerRadius="10"
+                                Margin="0,5"
+                                Padding="10">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Date}"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           Width="120"
+                                           FontSize="16"/>
+                                <TextBlock Text="{Binding Doctor}"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           Width="250"
+                                           Margin="10,0,0,0"
+                                           FontSize="16"/>
+                                <TextBlock Text="{Binding Description}"
+                                           Foreground="White"
+                                           Margin="10,0,0,0"
+                                           FontSize="16"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="0,5"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </StackPanel>
+        
+        
+        
+
+        <!-- Pages -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button Content="◀" 
+                    Width="30" Height="30" 
+                    Margin="10,0" 
+                    Background="Transparent" 
+                    BorderBrush="Transparent"
+                    Foreground="#476EFF"
+                    FontSize="18"
+                    Click="PrevPage_Click"/>
+
+            <Border Background="#8093FF"
+                    CornerRadius="10"
+                    Padding="5,2"
+                    Margin="5,0">
+                <TextBlock x:Name="PageCounterText"
+                           Text="1/1"
+                           Foreground="White"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+            </Border>
+
+            <Button Content="▶" 
+                    Width="30" Height="30" 
+                    Margin="10,0" 
+                    Background="Transparent" 
+                    BorderBrush="Transparent"
+                    Foreground="#476EFF"
+                    FontSize="18"
+                    Click="NextPage_Click"/>
+        </StackPanel>
+    </Grid>
 </UserControl>
