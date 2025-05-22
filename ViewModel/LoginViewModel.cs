@@ -70,8 +70,17 @@ namespace PolMedUMG.ViewModel
                         query2.Parameters.AddWithValue("@uid", _username);
                         query2.Parameters.AddWithValue("@pwd", _password);
                         String acctype = query2.ExecuteScalar().ToString();
-                        conn.Close();
+
                         SessionManager.accType = acctype;
+                        // wyslanie do bazy daty logowania
+                        MySqlCommand updateLoginTime = new MySqlCommand();
+                        updateLoginTime.Connection = conn;
+                        updateLoginTime.CommandText = @"UPDATE users SET last_login = @loginTime WHERE uid = @uid;";
+                        updateLoginTime.Parameters.AddWithValue("@loginTime", DateTime.Now);
+                        updateLoginTime.Parameters.AddWithValue("@uid", _username);
+                        updateLoginTime.ExecuteNonQuery();
+
+                        conn.Close();
                         // W zale�no�ci od typu u�ytkownika otwieramy odpowiednie okno
                         if (acctype.Equals("2"))
                         {

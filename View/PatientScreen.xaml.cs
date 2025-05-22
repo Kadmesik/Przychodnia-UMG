@@ -1,15 +1,41 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PolMedUMG.View
 {
     public partial class PatientScreen : Window
     {
+        public string LoggedInUser => $"Zalogowano jako: {SessionManager.CurrentUsername}";
         public PatientScreen()
         {
             InitializeComponent();
+
+            DataContext = this;
+
             LoadContent(new NewsView()); // Domyślny widok po uruchomieniu
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void btnMinimize_Close(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void btnMinimize_FullScreen(object sender, RoutedEventArgs e)
+        {
+            if (WindowState != WindowState.Maximized) WindowState = WindowState.Maximized;
+            else WindowState = WindowState.Normal;
         }
 
         public void LoadContent(UserControl control)
