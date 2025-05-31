@@ -14,30 +14,12 @@ using System.Windows.Shapes;
 
 namespace PolMedUMG.View
 {
-    /// <summary>
-    /// Logika interakcji dla klasy VisitDetailsWindow.xaml
-    /// </summary>
     public partial class VisitDetailsWindow : Window
     {
-        private string date;
-        private string doctor;
-        private string description;
-
-        public VisitDetailsWindow(string date, string doctor, Visit visit)
+        public VisitDetailsWindow(string description)
         {
             InitializeComponent();
-
-            VisitDateText.Text = $"Data: {visit.Date}";
-            DoctorText.Text = $"Lekarz: {visit.Doctor}";
-            DescriptionText.Text = $"Opis: {visit.Description}";
-        }
-
-
-        public VisitDetailsWindow(string date, string doctor, string description)
-        {
-            this.date = date;
-            this.doctor = doctor;
-            this.description = description;
+            DescriptionText.Text = description;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

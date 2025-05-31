@@ -1,29 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
 
 namespace PolMedUMG.View
 {
-    /// <summary>
-    /// Logika interakcji dla klasy Visits.xaml
-    /// </summary>
     public class Visit
     {
-        public string Doctor { get; set; }
-        public string Date { get; set; }
-        public string Description { get; set; }
-    }
+        public DateTime Date { get; set; }
+        public string Doctor { get; set; }       // Zawiera specialistID jako tekst
+        public string Description { get; set; }  // Zawiera serviceName
+        public string TestType { get; set; }  // Zawiera additionalInfo
 
+        public string FormattedDate => Date.ToString("dd.MM.yyyy");
+    }
 
     public partial class Visits : UserControl
     {
@@ -36,23 +28,35 @@ namespace PolMedUMG.View
         {
             InitializeComponent();
 
-            allVisits = new List<Visit>
-        {
-            new Visit { Date = "2024-04-01", Doctor = "dr Anna Kowalska", Description = "Wizyta kontrolna" },
-            new Visit { Date = "2024-03-15", Doctor = "dr Jan Nowak", Description = "Badania okresowe" },
-            new Visit { Date = "2024-02-10", Doctor = "dr Maria Nowicka", Description = "Konsultacja specjalistyczna" },
-            new Visit { Date = "2024-01-22", Doctor = "dr Tomasz Wiśniewski", Description = "Recepta" },
-            new Visit { Date = "2023-12-30", Doctor = "dr Ewa Zielińska", Description = "Szczepienie" },
-            new Visit { Date = "2024-04-01", Doctor = "dr Anna Kowalska", Description = "Wizyta kontrolna" },
-            new Visit { Date = "2024-03-15", Doctor = "dr Jan Nowak", Description = "Badania okresowe" },
-            new Visit { Date = "2024-02-10", Doctor = "dr Maria Nowicka", Description = "Konsultacja specjalistyczna" },
-            new Visit { Date = "2024-01-22", Doctor = "dr Tomasz Wiśniewski", Description = "Recepta" },
-            new Visit { Date = "2023-12-30", Doctor = "dr Ewa Zielińska", Description = "Szczepienie" },
-            new Visit { Date = "2024-01-22", Doctor = "dr Tomasz Wiśniewski", Description = "Recepta" },
-            new Visit { Date = "2024-01-22", Doctor = "dr Tomasz Wiśniewski", Description = "Recepta" },
+            allVisits = new List<Visit>();
 
+            using (MySqlConnection conn = new MySqlConnection(SessionManager.connStrSQL))
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT dateOfVisit, serviceName, details, specialistID FROM Visits;";
 
-        };
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            allVisits.Add(new Visit
+                            {
+                                Date = Convert.ToDateTime(reader["dateOfVisit"]),
+                                Doctor = reader["specialistID"].ToString(), // Zawiera specialistID jako tekst
+                                TestType = reader["serviceName"].ToString(),
+                                Description = reader["details"].ToString(),
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Błąd bazy danych: " + ex.Message);
+                }
+            }
 
             LoadCurrentPage();
         }
@@ -94,23 +98,12 @@ namespace PolMedUMG.View
             if (VisitsListBox.SelectedItem is Visit selectedVisit)
             {
                 var detailsWindow = new VisitDetailsWindow(
-                    selectedVisit.Date,
-                    selectedVisit.Doctor,
-                    selectedVisit // Przekaż obiekt Visit
+                    selectedVisit.Description
                 );
                 detailsWindow.ShowDialog();
 
                 VisitsListBox.SelectedItem = null;
             }
         }
-
-
-
-
     }
-
-
-
-
 }
-

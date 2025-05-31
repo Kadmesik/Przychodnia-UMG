@@ -22,8 +22,8 @@
             <!-- Headings -->
             <StackPanel Orientation="Horizontal" Margin="10,0,0,5">
                 <TextBlock Text="Data" Width="120" FontWeight="Bold"/>
-                <TextBlock Text="Lekarz" Width="250" FontWeight="Bold"/>
-                <TextBlock Text="Opis" FontWeight="Bold"/>
+                <TextBlock Text="Wizyta" Width="250" FontWeight="Bold"/>
+                <TextBlock Text="Status" FontWeight="Bold"/>
             </StackPanel>
 
             <!-- Results -->
@@ -55,7 +55,7 @@
                             </Border.Style>
 
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding Date}"
+                                <TextBlock Text="{Binding FormattedDate}"
                                            FontWeight="Bold"
                                            Foreground="White"
                                            Width="120"

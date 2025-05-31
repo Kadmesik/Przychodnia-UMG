@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using MySql.Data.MySqlClient;
 
 namespace PolMedUMG.View
 {
     public class Result
     {
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string TestType { get; set; } // np. Morfologia krwi
-        public string Status { get; set; } // np. odczytane / nieodczytane
-        public string OrderNumber { get; set; }       // numer zlecenia
-        public string SampleDate { get; set; }        // data pobrania
-        public string ResultDate { get; set; }        // data wykonania
-
-
+        public string Status { get; set; }   // np. odczytane / nieodczytane
+        public string Description { get; set; } // np. szczegóły badania
 
         public bool IsRead => Status == "odczytane";
 
+        public string FormattedDate => Date.ToString("dd.MM.yyyy");
     }
 
     public partial class Results : UserControl
@@ -32,14 +30,35 @@ namespace PolMedUMG.View
         {
             InitializeComponent();
 
-            allResults = new List<Result>
+            allResults = new List<Result>();
+
+            using (MySqlConnection conn = new MySqlConnection(SessionManager.connStrSQL))
             {
-                new Result { Date = "12.07.2020", SampleDate ="12.07.2020", ResultDate = "14.07.2020" ,TestType = "Morfologia krwi", Status = "odczytane", OrderNumber = "ZL20200712-01", },
-                new Result { Date = "08.02.2019", SampleDate ="08.02.2019", ResultDate = "11.02.2019" ,TestType = "Lipidogram", Status = "odczytane",OrderNumber = "AK471228-47" },
-                new Result { Date = "22.09.2017", SampleDate ="22.09.2017", ResultDate = "23.09.2017" ,TestType = "Mocz – badania ogólne", Status = "nieodczytane",OrderNumber = "93293219DA12-31" },
-                new Result { Date = "20.01.2015", SampleDate ="20.01.2015", ResultDate = "20.01.2015" ,TestType = "Morfologia krwi", Status = "odczytane", OrderNumber = "ZE3981232-93", },
-                new Result { Date = "03.07.2012", SampleDate ="03.07.2012", ResultDate = "04.07.2012" ,TestType = "Przeciwciała", Status = "nieodczytane",OrderNumber = "DSKDSJ213-38" },
-            };
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT dateOfVisit, serviceName, additionalInfo, status FROM Visits;";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            allResults.Add(new Result
+                            {
+                                Date = Convert.ToDateTime(reader["dateOfVisit"]),
+                                TestType = reader["serviceName"].ToString(),
+                                Description = reader["additionalInfo"].ToString(),
+                                Status = reader["status"].ToString()
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Błąd bazy danych: " + ex.Message);
+                }
+            }
 
             LoadCurrentPage();
         }
@@ -80,9 +99,36 @@ namespace PolMedUMG.View
         {
             if (ResultsListBox.SelectedItem is Result selectedResult)
             {
+                if (selectedResult.Status == "nieodczytane")
+                {
+                    using (MySqlConnection conn = new MySqlConnection(SessionManager.connStrSQL))
+                    {
+                        try
+                        {
+                            conn.Open();
+                            string sql = "UPDATE Visits SET status = 'odczytane' WHERE dateOfVisit = @date AND serviceName = @type";
+
+                            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@date", selectedResult.Date.ToString("yyyy-MM-dd"));
+                                cmd.Parameters.AddWithValue("@type", selectedResult.TestType);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            selectedResult.Status = "odczytane";
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Błąd przy aktualizacji statusu: " + ex.Message);
+                        }
+                    }
+                }
+
                 var detailsWindow = new ResultsWindow(selectedResult);
                 detailsWindow.ShowDialog();
+
                 ResultsListBox.SelectedItem = null;
+                LoadCurrentPage();
             }
         }
     }
