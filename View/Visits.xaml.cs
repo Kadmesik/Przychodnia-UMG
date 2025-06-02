@@ -65,7 +65,7 @@ namespace PolMedUMG.View
                     return;
                 }
             }
-
+            allVisits = allVisits.OrderByDescending(r => r.Date).ToList();
             LoadCurrentPage();
         }
 
