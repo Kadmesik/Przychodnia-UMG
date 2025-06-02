@@ -1,0 +1,48 @@
+name: .NET Desktop CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 9
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Spakuj build
+      run: |
+       mkdir publish
+       cp -r ./bin//Release/net9.0-windows/* ./publish/
+       cd publish
+       7z a ../PolMedUMG-release.zip *
+       cd ..
+    - name: Utwórz release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ github.sha }}
+        name: Release ${{ github.sha }}
+        files: PolMedUMG-release.zip
+        prerelease: true
+      env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
