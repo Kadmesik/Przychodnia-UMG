@@ -66,7 +66,10 @@ namespace PolMedUMG.View
                     MessageBox.Show("Błąd bazy danych: " + ex.Message);
                 }
             }
-
+            allResults = allResults
+    .Where(r => r.Date <= DateTime.Today)
+    .OrderByDescending(r => r.Date)
+    .ToList();
             LoadCurrentPage();
         }
 
