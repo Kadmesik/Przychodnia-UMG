@@ -238,7 +238,7 @@ namespace PolMedUMG.View
                         cmd.Parameters.AddWithValue("@date", selectedDate.Value.Date + currentTime);
                         cmd.Parameters.AddWithValue("@service", ServiceComboBox.SelectedItem.ToString());
                         cmd.Parameters.AddWithValue("@status", "nieodczytane");
-                        cmd.Parameters.AddWithValue("@patient", "patient");
+                        cmd.Parameters.AddWithValue("@patient", SessionManager.CurrentUsername);
                         cmd.Parameters.AddWithValue("@details", "");
 
                         cmd.ExecuteNonQuery();

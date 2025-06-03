@@ -20,53 +20,68 @@
             </Grid.ColumnDefinitions>
 
             <!-- Imię -->
-            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Border Width="54" Height="54" CornerRadius="27" Background="White">
-                    <fa:ImageAwesome Icon="Question" Margin="12"/>
-                </Border>
-                <Border Background="White" CornerRadius="8" Height="30" Margin="-13">
-                    <TextBox x:Name="Name" Text="Imie" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
-                </Border>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" >
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="54" Height="54" CornerRadius="27" Background="White" >
+                        <fa:ImageAwesome Icon="Question" Margin="12" x:Name="NameIcon"/>
+                    </Border>
+                    <Border Background="White" CornerRadius="8" Height="30" Margin="-13" x:Name="NameBorder">
+                        <TextBox x:Name="Name" Text="Imie" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Foreground="Gray" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
+                    </Border>
+                </StackPanel>
+                <TextBlock x:Name="NameError" Text="" Visibility="Collapsed" Foreground="#FFFF5C5C" FontSize="14" Margin="50,-10,0,0" TextWrapping="Wrap" Width="270"/>
             </StackPanel>
             
             <!-- E-mail -->
-            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Border Width="54" Height="54" CornerRadius="27" Background="White">
-                    <fa:ImageAwesome Icon="Envelope" Margin="12"/>
-                </Border>
-                <Border Background="White" CornerRadius="8" Height="30" Margin="-13">
-                    <TextBox x:Name="Email" Text="E-mail" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
-                </Border>
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" >
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="54" Height="54" CornerRadius="27" Background="White">
+                        <fa:ImageAwesome Icon="Envelope" Margin="12" x:Name="EmailIcon"/>
+                    </Border>
+                    <Border Background="White" CornerRadius="8" Height="30" Margin="-13">
+                        <TextBox x:Name="Email" Text="E-mail" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
+                    </Border>
+                </StackPanel>
+                <TextBlock x:Name="EmailError" Text="" Visibility="Collapsed" Foreground="#FFFF5C5C" FontSize="14" Margin="50,-10,0,0" TextWrapping="Wrap" Width="270"/>
             </StackPanel>
 
             <!-- Nazwisko -->
-            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Border Width="54" Height="54" CornerRadius="27" Background="White">
-                    <fa:ImageAwesome Icon="Question" Margin="12"/>
-                </Border>
-                <Border Background="White" CornerRadius="8" Height="30" Margin="-13">
-                    <TextBox x:Name="Surname" Text="Nazwisko" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
-                </Border>
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" >
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="54" Height="54" CornerRadius="27" Background="White">
+                        <fa:ImageAwesome Icon="Question" Margin="12" x:Name="SurnameIcon"/>
+                    </Border>
+                    <Border Background="White" CornerRadius="8" Height="30" Margin="-13">
+                        <TextBox x:Name="Surname" Text="Nazwisko" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
+                    </Border>
+                </StackPanel>
+                <TextBlock x:Name="SurnameError" Text="" Visibility="Collapsed" Foreground="#FFFF5C5C" FontSize="14" Margin="50,-10,0,0" TextWrapping="Wrap" Width="270"/>
             </StackPanel>
 
             <!-- Nazwa użytkownika -->
-            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Border Width="54" Height="54" CornerRadius="27" Background="White">
-                    <fa:ImageAwesome Icon="User" Margin="12"/>
-                </Border>
-                <Border Background="White" CornerRadius="8" Height="30" Margin="-13">
-                    <TextBox x:Name="Nickname" Text="Nazwa użytkownika" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
-                </Border>
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" >
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="54" Height="54" CornerRadius="27" Background="White">
+                        <fa:ImageAwesome Icon="User" Margin="12" x:Name="NicknameIcon"/>
+                    </Border>
+                    <Border Background="White" CornerRadius="8" Height="30" Margin="-13">
+                        <TextBox x:Name="Nickname" Text="Nazwa użytkownika" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
+                    </Border>
+                </StackPanel>
+                <TextBlock x:Name="UsernameError" Text="" Visibility="Collapsed" Foreground="#FFFF5C5C" FontSize="14" Margin="50,-10,0,0" TextWrapping="Wrap" Width="270"/>
             </StackPanel>
 
             <!-- Hasło -->
-            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Border Width="54" Height="54" CornerRadius="27" Background="White">
-                    <fa:ImageAwesome Icon="Lock" Margin="12"/>
-                </Border>
-                <Border Background="White" CornerRadius="8" Height="30" Margin="-13">
-                    <TextBox x:Name="Password" Text="Hasło" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
-                </Border>
+            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Center" >
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="54" Height="54" CornerRadius="27" Background="White">
+                        <fa:ImageAwesome Icon="Lock" Margin="12" x:Name="PasswordIcon"/>
+                    </Border>
+                    <Border Background="White" CornerRadius="8" Height="30" Margin="-13">
+                        <TextBox x:Name="Password" Text="Hasło" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Width="300" Height="30" Background="Transparent" BorderThickness="0" Padding="15,0,0,0" FontSize="23"/>
+                    </Border>
+                </StackPanel>
+                <TextBlock x:Name="PasswordError" Text="" Visibility="Collapsed" Foreground="#FFFF5C5C" FontSize="14" Margin="50,-10,0,0" TextWrapping="Wrap" Width="270"/>
             </StackPanel>
 
             <!-- Przycisk "Wróć" -->
