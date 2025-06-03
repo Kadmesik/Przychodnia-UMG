@@ -3,10 +3,60 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Height="Auto" Width="Auto">
 
-    <TextBlock Text="Ustawienia konta"
-           FontSize="26"
-           FontWeight="Bold"
-           HorizontalAlignment="Center"
-           Margin="0,0,0,20"/>
+    <Grid Margin="40">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Width="400">
+            <TextBlock Text="Ustawienia konta"
+                       FontSize="26"
+                       FontWeight="Bold"
+                       FontFamily="Chakra Petch"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
 
+            <!-- Zmiana hasła -->
+            <Border CornerRadius="10" BorderBrush="#E0E0E0" BorderThickness="1" Background="#F8F8F8" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Zmiana hasła" FontFamily="Chakra Petch" FontWeight="Bold" FontSize="20" Margin="0,0,0,10"/>
+                    <TextBlock Text="Nowe hasło:" FontFamily="Chakra Petch" Margin="0,5,0,2"/>
+                    <PasswordBox x:Name="NewPasswordBox" Height="35" FontSize="16" FontFamily="Chakra Petch" Padding="10,5" Margin="0,0,0,10"/>
+                    <TextBlock Text="Potwierdź nowe hasło:" FontFamily="Chakra Petch" Margin="0,5,0,2"/>
+                    <PasswordBox x:Name="ConfirmPasswordBox" Height="35" FontSize="16" FontFamily="Chakra Petch" Padding="10,5" Margin="0,0,0,15"/>
+                    <Button Content="Zmień hasło"
+                            Height="40"
+                            Background="#4A6CF7"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            FontFamily="Chakra Petch"
+                            BorderThickness="0"
+                            FontSize="16"
+                            Cursor="Hand"
+                            Width="180"
+                            HorizontalAlignment="Left"
+                            Click="ChangePassword_Click"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Zmiana maila -->
+            <Border CornerRadius="10" BorderBrush="#E0E0E0" BorderThickness="1" Background="#F8F8F8" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Zmiana adresu e-mail" FontFamily="Chakra Petch" FontWeight="Bold" FontSize="20" Margin="0,0,0,10"/>
+                    <TextBlock Text="Nowy e-mail:" FontFamily="Chakra Petch" Margin="0,5,0,2"/>
+                    <TextBox x:Name="NewEmailBox" Height="35" FontSize="16" FontFamily="Chakra Petch" Padding="10,5" Margin="0,0,0,10"/>
+                    <TextBlock Text="Potwierdź nowy e-mail:" FontFamily="Chakra Petch" Margin="0,5,0,2"/>
+                    <TextBox x:Name="ConfirmEmailBox" Height="35" FontSize="16" FontFamily="Chakra Petch" Padding="10,5" Margin="0,0,0,15"/>
+                    <Button Content="Zmień e-mail"
+                            Height="40"
+                            Background="#4A6CF7"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            FontFamily="Chakra Petch"
+                            BorderThickness="0"
+                            FontSize="16"
+                            Cursor="Hand"
+                            Width="180"
+                            HorizontalAlignment="Left"
+                            Click="ChangeEmail_Click"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
 </UserControl>
