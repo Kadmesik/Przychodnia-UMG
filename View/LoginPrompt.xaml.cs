@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using PolMedUMG.ViewModel;
 
 namespace PolMedUMG.View
@@ -38,6 +39,19 @@ namespace PolMedUMG.View
             if (parentWindow != null)
             {
                 parentWindow.LoadContent(Conv);
+            }
+        }
+        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                // Przypisz hasło z PasswordBox do ViewModelu
+                if (DataContext is PolMedUMG.ViewModel.LoginViewModel vm)
+                {
+                    vm.Password = passwordInput.Password;
+                    if (vm.LoginCommand.CanExecute(null))
+                        vm.LoginCommand.Execute(null);
+                }
             }
         }
     }

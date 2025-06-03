@@ -71,6 +71,7 @@ namespace PolMedUMG.View
                 MainArea.Children.Add(new Messages());
             }
         }
+
         private void Send_Click(object sender, RoutedEventArgs e)
         {
             string messageText = MessageInput.Text;

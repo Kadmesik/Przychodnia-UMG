@@ -53,6 +53,7 @@ namespace PolMedUMG.ViewModel
             _view = view;
         }
 
+
         private void Login()
         {
             SessionManager.CurrentUsername = _username;
@@ -172,7 +173,7 @@ namespace PolMedUMG.ViewModel
                             }
                             if (_password == recoveryPassword && timeSinceGeneration.TotalMinutes > 15) // przedawnione haslo
                             {
-                                ErrorMessage = "Hasło przywracające uległo przedawnieniu";
+                                ErrorMessage = "Hasło przywracające uległo przedawnieniu.";
                                 MySqlCommand deleteRecoveryPasswords = new MySqlCommand();
                                 deleteRecoveryPasswords.Connection = conn;
                                 deleteRecoveryPasswords.CommandText = @"DELETE FROM PassRecovery WHERE username = @uid;";
@@ -189,7 +190,7 @@ namespace PolMedUMG.ViewModel
                 }
                 else
                 {
-                    ErrorMessage = "Zły login bądź hasło";
+                    ErrorMessage = "Nie istnieje konto o tej nazwie użytkownika.";
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
