@@ -6,6 +6,8 @@
     xmlns:fa="clr-namespace:FontAwesome.WPF;assembly=FontAwesome.WPF"
     xmlns:System="clr-namespace:System;assembly=System.Runtime"
     xmlns:local="clr-namespace:PolMedUMG.ViewModel"
+    xmlns:ctrl="clr-namespace:PolMedUMG.Controls"
+
     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
     xml:lang="pl-PL"
     mc:Ignorable="d"
@@ -31,7 +33,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}"
+                    <ctrl:CalendarNoUia CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}"
                           DisplayDateStart="{Binding .}"
                           DisplayMode="Month" 
                           Loaded="Calendar_Loaded"
@@ -40,15 +42,15 @@
                               Visibility="Collapsed"
                           BorderThickness="0" RenderTransformOrigin="0.5,0.5" FontSize="24">
 
-                        <Calendar.RenderTransform>
+                        <ctrl:CalendarNoUia.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
                                 <SkewTransform/>
                                 <RotateTransform/>
                                 <TranslateTransform/>
                             </TransformGroup>
-                        </Calendar.RenderTransform>
-                    </Calendar>
+                        </ctrl:CalendarNoUia.RenderTransform>
+                    </ctrl:CalendarNoUia>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
