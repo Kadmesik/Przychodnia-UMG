@@ -83,6 +83,9 @@ namespace PolMedUMG.View
 
         private void LoadCalendar()
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pl-PL");
+
             MonthLabel.Text = currentMonth.ToString("MMMM yyyy");
             DaysGrid.Children.Clear();
 
